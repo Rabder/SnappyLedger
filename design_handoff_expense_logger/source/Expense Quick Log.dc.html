@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#05080c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Expense Log">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+@keyframes flashIn { from{ opacity:0; transform:scale(0.98) } to{ opacity:1; transform:scale(1) } }
+@keyframes shakeX { 10%,90%{transform:translateX(-1px)} 20%,80%{transform:translateX(2px)} 30%,50%,70%{transform:translateX(-4px)} 40%,60%{transform:translateX(4px)} }
+@keyframes catPop { from{ transform:scale(0.9); opacity:0.6 } to{ transform:scale(1); opacity:1 } }
+body{margin:0;background:oklch(9% 0.01 250);font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;justify-content:center;padding:24px 0}
+input::placeholder{color:oklch(40% 0.012 250)}
+input:focus{outline:none}
+</style>
+</helmet>
+<div style="width:390px;height:844px;border-radius:44px;background:oklch(13% 0.012 250);border:1px solid oklch(100% 0 0 / 0.08);box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);position:relative;overflow:hidden;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px 4px;flex:none">
+    <span style="font:600 15px 'Space Mono',monospace;color:oklch(97% 0.004 250)">{{ nowTime }}</span>
+    <div style="width:22px;height:11px;border:1.5px solid oklch(97% 0.004 250 / 0.6);border-radius:3px;position:relative;display:flex;align-items:center;padding:1.5px"><div style="width:70%;height:100%;background:oklch(97% 0.004 250 / 0.8);border-radius:1px"></div></div>
+  </div>
+
+  <div style="flex:none;display:flex;flex-direction:column;overflow-y:auto;padding:8px 24px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+      <span style="font:700 22px 'Manrope';color:oklch(97% 0.004 250)">New expense</span>
+      <div style="width:32px;height:32px;border-radius:9px;background:oklch(19% 0.014 250);position:relative">
+        <div style="position:absolute;top:50%;left:50%;width:12px;height:1.5px;background:oklch(72% 0.012 250);transform:translate(-50%,-50%) rotate(45deg)"></div>
+        <div style="position:absolute;top:50%;left:50%;width:12px;height:1.5px;background:oklch(72% 0.012 250);transform:translate(-50%,-50%) rotate(-45deg)"></div>
+      </div>
+    </div>
+
+    <button onClick="{{ toggleCal }}" style="margin-top:14px;align-self:flex-start;display:flex;align-items:center;gap:6px;background:oklch(19% 0.014 250);border:none;border-radius:20px;padding:8px 14px;font:600 12.5px 'Manrope';color:oklch(85% 0.01 250)" style-hover="background:oklch(23% 0.015 250)">{{ dateLabel }} ›</button>
+
+    <div style="margin-top:18px;border:1px solid {{ amountBorder }};border-radius:18px;padding:18px;display:flex;align-items:center;justify-content:center;gap:3px;transition:border-color 0.15s ease;animation:{{ amountShakeAnim }}">
+      <span style="font:700 34px 'Space Mono',monospace;color:oklch(55% 0.012 250)">$</span>
+      <input value="{{ amount }}" onChange="{{ setAmount }}" onFocus="{{ onAmountFocus }}" onBlur="{{ onAmountBlur }}" inputmode="decimal" placeholder="0" style="width:170px;background:none;border:none;outline:none;text-align:center;font:700 42px 'Space Mono',monospace;color:oklch(97% 0.004 250)"/>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;animation:{{ catShakeAnim }}">
+      <sc-for list="{{ catButtons }}" as="cat" hint-placeholder-count="6">
+        <button onClick="{{ cat.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 4px 12px;border-radius:18px;border:1px solid {{ cat.borderColor }};background:{{ cat.bg }};transition:background 0.12s ease,border-color 0.12s ease" style-hover="background:oklch(22% 0.016 250)" style-active="transform:scale(0.96)">
+          <image-slot id="{{ cat.iconId }}" shape="rounded" radius="18" placeholder="Icon" style="width:82px;height:82px;background:oklch(24% 0.016 250)"></image-slot>
+          <span style="font:600 11px 'Manrope';color:oklch(85% 0.01 250)">{{ cat.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <input value="{{ note }}" onChange="{{ setNote }}" placeholder="Add a note (optional)" style="margin-top:14px;width:100%;box-sizing:border-box;background:oklch(19% 0.014 250);border:1px solid oklch(100% 0 0 / 0.08);border-radius:12px;padding:12px 14px;font:500 13px 'Manrope';color:oklch(95% 0.004 250)"/>
+  </div>
+
+  <div style="flex:1"></div>
+
+  <div style="flex:none;padding:8px 20px 10px;transform: translateY({{ dragY }}px);transition:{{ dragTransition }}">
+    <div onPointerDown="{{ dragStart }}" onPointerMove="{{ dragMove }}" onPointerUp="{{ dragEnd }}" style="width:60px;height:20px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;touch-action:none;cursor:grab">
+      <div style="width:36px;height:4px;border-radius:2px;background:oklch(100% 0 0 / 0.18)"></div>
+    </div>
+    <button onClick="{{ tapSave }}" style="width:100%;padding:17px;border:none;border-radius:18px;background:{{ saveBg }};color:#fff;font:700 17px 'Manrope';transition:background 0.15s ease" style-hover="opacity:0.92" style-active="transform:scale(0.98)">Log it</button>
+    <div style="text-align:center;font:500 11px 'Manrope';color:{{ helperColor }};margin-top:7px">{{ helperText }}</div>
+  </div>
+
+  <div style="flex:none;background:oklch(15% 0.012 250);border-top:1px solid oklch(100% 0 0 / 0.08);padding:10px 24px 22px;display:flex;justify-content:space-around">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span style="width:22px;height:22px;border-radius:7px;background:oklch(70% 0.16 275)"></span>
+      <span style="font:700 10.5px 'Manrope';color:oklch(97% 0.004 250)">Log</span>
+    </div>
+    <a href="History.dc.html" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;opacity:0.55">
+      <span style="width:22px;height:22px;border-radius:7px;border:1.8px solid oklch(90% 0.008 250)"></span>
+      <span style="font:600 10.5px 'Manrope';color:oklch(90% 0.008 250)">History</span>
+    </a>
+  </div>
+
+  <sc-if value="{{ calOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ toggleCal }}" style="position:absolute;inset:0;background:oklch(0% 0 0 / 0.45);z-index:7"></div>
+  </sc-if>
+  <div style="position:absolute;left:0;right:0;bottom:0;background:oklch(16% 0.013 250);border-top:1px solid oklch(100% 0 0 / 0.1);border-radius:24px 24px 0 0;padding:18px 20px 22px;z-index:8;box-shadow:0 -20px 40px rgba(0,0,0,0.4);transform:translateY({{ calSheetY }});transition:transform 0.28s cubic-bezier(0.32,0.72,0,1);pointer-events:{{ calPointerEvents }}">
+    <div style="width:36px;height:4px;border-radius:2px;background:oklch(100% 0 0 / 0.18);margin:0 auto 14px"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <button onClick="{{ prevMonth }}" style="width:28px;height:28px;border-radius:8px;border:none;background:oklch(21% 0.015 250);color:oklch(85% 0.01 250);font:600 14px 'Manrope'">‹</button>
+      <span style="font:700 15px 'Manrope';color:oklch(95% 0.004 250)">{{ monthLabel }}</span>
+      <button onClick="{{ nextMonth }}" disabled="{{ nextDisabled }}" style="width:28px;height:28px;border-radius:8px;border:none;background:oklch(21% 0.015 250);color:{{ nextColor }};font:600 14px 'Manrope'">›</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px">
+      <button onClick="{{ setToday }}" style="flex:1;padding:8px 0;border-radius:14px;border:none;background:oklch(21% 0.015 250);font:600 11.5px 'Manrope';color:oklch(85% 0.01 250)">Today</button>
+      <button onClick="{{ setYesterday }}" style="flex:1;padding:8px 0;border-radius:14px;border:none;background:oklch(21% 0.015 250);font:600 11.5px 'Manrope';color:oklch(85% 0.01 250)">Yesterday</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:14px">
+      <sc-for list="{{ weekdayLabels }}" as="wd" hint-placeholder-count="7"><span style="text-align:center;font:600 10px 'Manrope';color:oklch(48% 0.012 250)">{{ wd.label }}</span></sc-for>
+      <sc-for list="{{ calendarButtons }}" as="cell" hint-placeholder-count="35">
+        <sc-if value="{{ cell.isDay }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ cell.onClick }}" disabled="{{ cell.disabled }}" style="aspect-ratio:1;border-radius:50%;border:none;background:{{ cell.bg }};color:{{ cell.color }};font:600 13px 'Manrope';cursor:{{ cell.cursor }}">{{ cell.day }}</button>
+        </sc-if>
+      </sc-for>
+    </div>
+    <button onClick="{{ toggleCal }}" style="margin-top:16px;width:100%;padding:13px;border:none;border-radius:14px;background:oklch(70% 0.16 275);color:#fff;font:700 14px 'Manrope'">Done</button>
+  </div>
+
+  <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:oklch(13% 0.012 250);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:flashIn 0.25s ease;z-index:10">
+      <div style="width:88px;height:88px;border-radius:50%;background:oklch(75% 0.15 165 / 0.15);display:flex;align-items:center;justify-content:center">
+        <div style="width:32px;height:18px;border-left:4px solid oklch(75% 0.15 165);border-bottom:4px solid oklch(75% 0.15 165);transform:rotate(-45deg) translate(2px,-3px)"></div>
+      </div>
+      <span style="font:700 24px 'Manrope';color:oklch(97% 0.004 250)">Logged!</span>
+      <span style="font:600 15px 'Manrope';color:oklch(70% 0.012 250)">{{ savedSummary }}</span>
+      <button onClick="{{ reset }}" style="margin-top:10px;padding:14px 28px;border:none;border-radius:16px;background:oklch(19% 0.014 250);color:oklch(95% 0.004 250);font:600 14px 'Manrope'" style-hover="background:oklch(23% 0.015 250)">Log another</button>
+    </div>
+  </sc-if>
+
+  <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:oklch(100% 0 0 / 0.3)"></div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATS = [
+  { id: 'rent', label: 'Rent' },
+  { id: 'food', label: 'Food' },
+  { id: 'transport', label: 'Transport' },
+  { id: 'subs', label: 'Subscriptions' },
+  { id: 'ent', label: 'Entertainment' },
+  { id: 'other', label: 'Other' },
+];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WEEKDAYS = ['S','M','T','W','T','F','S'].map(l => ({ label: l }));
+
+function stripTime(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function sameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+
+class Component extends DCLogic {
+  timers = [];
+
+  state = (() => {
+    const now = new Date();
+    return {
+      amount: '',
+      cat: null,
+      date: stripTime(now),
+      viewY: now.getFullYear(),
+      viewM: now.getMonth(),
+      note: '',
+      calOpen: false,
+      saved: false,
+      amountFocused: false,
+      shakeAmount: false,
+      shakeCat: false,
+      dragY: 0,
+      dragging: false,
+    };
+  })();
+
+  componentWillUnmount() {
+    this.timers.forEach(t => clearTimeout(t));
+  }
+
+  formatClock() {
+    const n = new Date();
+    let h = n.getHours() % 12; if (h === 0) h = 12;
+    const m = String(n.getMinutes()).padStart(2, '0');
+    return h + ':' + m;
+  }
+
+  dateLabelFor(date) {
+    const today = stripTime(new Date());
+    const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+    if (sameDay(date, today)) return 'Today';
+    if (sameDay(date, yesterday)) return 'Yesterday';
+    return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate();
+  }
+
+  setAmount(raw) {
+    let v = raw.replace(/[^0-9.]/g, '');
+    const firstDot = v.indexOf('.');
+    if (firstDot >= 0) v = v.slice(0, firstDot + 1) + v.slice(firstDot + 1).replace(/\./g, '');
+    const dot = v.indexOf('.');
+    if (dot >= 0 && v.length - dot - 1 > 2) v = v.slice(0, dot + 3);
+    this.setState({ amount: v });
+  }
+
+  selectCat(id) {
+    this.setState(s => ({ cat: s.cat === id ? null : id }));
+  }
+
+  toggleCal() {
+    this.setState(s => {
+      const opening = !s.calOpen;
+      return { calOpen: opening, viewY: opening ? s.date.getFullYear() : s.viewY, viewM: opening ? s.date.getMonth() : s.viewM };
+    });
+  }
+
+  prevMonth() {
+    this.setState(s => {
+      let m = s.viewM - 1, y = s.viewY;
+      if (m < 0) { m = 11; y -= 1; }
+      return { viewM: m, viewY: y };
+    });
+  }
+
+  nextMonth() {
+    this.setState(s => {
+      const today = new Date();
+      if (s.viewY === today.getFullYear() && s.viewM === today.getMonth()) return {};
+      let m = s.viewM + 1, y = s.viewY;
+      if (m > 11) { m = 0; y += 1; }
+      return { viewM: m, viewY: y };
+    });
+  }
+
+  selectDay(day) {
+    this.setState(s => ({ date: new Date(s.viewY, s.viewM, day), calOpen: false }));
+  }
+
+  setToday() {
+    this.setState({ date: stripTime(new Date()), calOpen: false });
+  }
+
+  setYesterday() {
+    const d = stripTime(new Date()); d.setDate(d.getDate() - 1);
+    this.setState({ date: d, calOpen: false });
+  }
+
+  triggerShake(field) {
+    this.setState({ [field]: true });
+    const t = setTimeout(() => this.setState({ [field]: false }), 420);
+    this.timers.push(t);
+  }
+
+  attemptSave() {
+    const { amount, cat } = this.state;
+    const validAmount = parseFloat(amount) > 0;
+    if (!validAmount) this.triggerShake('shakeAmount');
+    if (!cat) this.triggerShake('shakeCat');
+    if (!validAmount || !cat) return;
+    this.setState({ saved: true });
+  }
+
+  reset() {
+    this.setState({ amount: '', cat: null, note: '', date: stripTime(new Date()), saved: false });
+  }
+
+  dragStart(e) {
+    if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {} }
+    this.setState({ dragging: true, dragStartY: e.clientY, dragY: 0 });
+  }
+  dragMove(e) {
+    if (!this.state.dragging) return;
+    const dy = e.clientY - this.state.dragStartY;
+    this.setState({ dragY: Math.max(-90, Math.min(0, dy)) });
+  }
+  dragEnd() {
+    const shouldSave = this.state.dragging && this.state.dragY <= -55;
+    this.setState({ dragging: false, dragY: 0 });
+    if (shouldSave) this.attemptSave();
+  }
+
+  buildCalendarCells() {
+    const { viewY, viewM } = this.state;
+    const startWeekday = new Date(viewY, viewM, 1).getDay();
+    const daysInMonth = new Date(viewY, viewM + 1, 0).getDate();
+    const today = stripTime(new Date());
+    const cells = [];
+    for (let i = 0; i < startWeekday; i++) cells.push({ isDay: false });
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cellDate = new Date(viewY, viewM, d);
+      const future = cellDate > today;
+      const selected = sameDay(cellDate, this.state.date);
+      cells.push({
+        isDay: true, day: d, disabled: future,
+        cursor: future ? 'default' : 'pointer',
+        bg: selected ? 'oklch(70% 0.16 275)' : 'transparent',
+        color: future ? 'oklch(38% 0.01 250)' : (selected ? '#fff' : 'oklch(88% 0.008 250)'),
+        onClick: future ? undefined : (() => this.selectDay(d)),
+      });
+    }
+    return cells;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const validAmount = parseFloat(s.amount) > 0;
+    const isValid = validAmount && !!s.cat;
+    const today = new Date();
+    const nextDisabled = s.viewY === today.getFullYear() && s.viewM === today.getMonth();
+    const catObj = CATS.find(c => c.id === s.cat);
+
+    return {
+      nowTime: this.formatClock(),
+      dateLabel: this.dateLabelFor(s.date),
+      amount: s.amount,
+      note: s.note,
+      calOpen: s.calOpen,
+      calSheetY: s.calOpen ? '0%' : '110%',
+      calPointerEvents: s.calOpen ? 'auto' : 'none',
+      saved: s.saved,
+      dragY: s.dragY,
+      dragTransition: s.dragging ? 'none' : 'transform 0.25s cubic-bezier(0.32,0.72,0,1)',
+      amountBorder: s.amountFocused ? 'oklch(70% 0.16 275 / 0.7)' : 'oklch(100% 0 0 / 0.1)',
+      amountShakeAnim: s.shakeAmount ? 'shakeX 0.4s ease' : 'none',
+      catShakeAnim: s.shakeCat ? 'shakeX 0.4s ease' : 'none',
+      saveBg: isValid ? 'oklch(70% 0.16 275)' : 'oklch(70% 0.16 275 / 0.4)',
+      helperText: isValid ? 'swipe up or tap to log' : (!validAmount && !s.cat ? 'Enter an amount and pick a category' : (!validAmount ? 'Enter an amount' : 'Pick a category')),
+      helperColor: (s.shakeAmount || s.shakeCat) ? 'oklch(72% 0.16 30)' : 'oklch(48% 0.012 250)',
+      savedSummary: '$' + (s.amount || '0') + (catObj ? ' · ' + catObj.label : ''),
+      monthLabel: MONTHS[s.viewM] + ' ' + s.viewY,
+      nextDisabled,
+      nextColor: nextDisabled ? 'oklch(38% 0.01 250)' : 'oklch(85% 0.01 250)',
+      weekdayLabels: WEEKDAYS,
+      calendarButtons: this.buildCalendarCells(),
+      catButtons: CATS.map(cat => ({
+        id: cat.id, label: cat.label, iconId: 'cat-icon-' + cat.id,
+        bg: s.cat === cat.id ? 'oklch(70% 0.16 275 / 0.16)' : 'oklch(19% 0.014 250)',
+        borderColor: s.cat === cat.id ? 'oklch(70% 0.16 275 / 0.6)' : 'oklch(100% 0 0 / 0.08)',
+        onClick: () => this.selectCat(cat.id),
+      })),
+      setAmount: (e) => this.setAmount(e.target.value),
+      onAmountFocus: () => this.setState({ amountFocused: true }),
+      onAmountBlur: () => this.setState({ amountFocused: false }),
+      setNote: (e) => this.setState({ note: e.target.value }),
+      toggleCal: () => this.toggleCal(),
+      prevMonth: () => this.prevMonth(),
+      nextMonth: () => this.nextMonth(),
+      setToday: () => this.setToday(),
+      setYesterday: () => this.setYesterday(),
+      dragStart: (e) => this.dragStart(e),
+      dragMove: (e) => this.dragMove(e),
+      dragEnd: () => this.dragEnd(),
+      tapSave: () => this.attemptSave(),
+      reset: () => this.reset(),
+    };
+  }
+}
+</script>
+</body>
+</html>
