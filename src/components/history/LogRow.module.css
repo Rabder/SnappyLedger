@@ -3,7 +3,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 8px;
-  border-radius: var(--radius-md);
+  border-radius: 14px;
   border: none;
   background: transparent;
   text-align: left;

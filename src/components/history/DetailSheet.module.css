@@ -12,7 +12,7 @@
   bottom: 0;
   background: var(--color-bg-surface);
   border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
-  padding: 24px 24px 30px;
+  padding: 24px 24px calc(30px + env(safe-area-inset-bottom));
   z-index: 9;
   box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.4);
   animation: flashIn 0.2s ease;
@@ -59,7 +59,7 @@
   width: 100%;
   padding: 14px;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 14px;
   background: var(--color-tile-default);
   color: var(--color-text-primary);
   font: 600 14px var(--font-sans);

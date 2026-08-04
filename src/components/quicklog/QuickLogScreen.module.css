@@ -9,7 +9,7 @@
   flex: none;
   display: flex;
   flex-direction: column;
-  padding: 8px 24px 0;
+  padding: calc(8px + env(safe-area-inset-top)) 24px 0;
 }
 
 .header {

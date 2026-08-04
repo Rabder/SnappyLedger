@@ -11,7 +11,7 @@
 
 .header {
   flex: none;
-  padding: 10px 24px 0;
+  padding: calc(10px + env(safe-area-inset-top)) 24px 0;
 }
 
 .title {

@@ -15,7 +15,7 @@ go one milestone at a time rather than racing to the end.
 - [x] 9. Swipe-up gesture (independent from tap handler)
 - [x] 10. Real Supabase insert (explicit `category_id`/`user_id`)
 - [x] 11. History screen (grouping, filters, detail sheet)
-- [ ] 12. Navigation + polish pass
+- [x] 12. Navigation + polish pass
 - [ ] 13. PWA manifest/installability
 
 ## Review
