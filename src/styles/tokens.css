@@ -1,0 +1,58 @@
+/* Design tokens — mirrors design_handoff_expense_logger/README.md "Design Tokens" table.
+   Keep this file the single source of truth; components should reference these
+   custom properties rather than hardcoding hex values. */
+
+:root {
+  /* Colors — surfaces */
+  --color-bg-page: #010304;
+  --color-bg-surface: #05080c;
+  --color-tile-default: #0f141a;
+  --color-tile-hover: #151b22;
+
+  /* Colors — accent / status */
+  --color-accent: #8393ff;
+  --color-accent-bg: rgba(131, 147, 255, 0.16);
+  --color-accent-border: rgba(131, 147, 255, 0.6);
+  --color-success: #26cb96;
+  --color-error: #f87966;
+
+  /* Colors — text */
+  --color-text-primary: #f3f5f8;
+  --color-text-secondary: #c9ced4;
+  --color-text-muted: #646a70;
+  --color-text-faint: #595e64;
+
+  /* Colors — borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  /* Colors — categories (avatar / icon-chip backgrounds) */
+  --color-category-rent: #d76a5a;
+  --color-category-food: #3aa85b;
+  --color-category-transport: #2783d5;
+  --color-category-subscriptions: #8f68cb;
+  --color-category-entertainment: #e1505a;
+  --color-category-other: #555f69;
+
+  /* Typography */
+  --font-sans: 'Manrope', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 10px;
+  --space-md: 12px;
+  --space-lg: 14px;
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 18px;
+  --radius-pill: 20px;
+  --radius-sheet: 24px;
+
+  /* Motion */
+  --motion-sheet-duration: 280ms;
+  --motion-sheet-easing: cubic-bezier(0.32, 0.72, 0, 1);
+  --motion-fade-duration: 250ms;
+  --motion-shake-duration: 400ms;
+}
