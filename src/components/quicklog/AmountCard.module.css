@@ -1,0 +1,38 @@
+.card {
+  margin-top: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: border-color 0.15s ease;
+}
+
+.card:focus-within {
+  border-color: rgba(131, 147, 255, 0.7);
+}
+
+.shake {
+  animation: shakeX 0.4s ease;
+}
+
+.currency {
+  font: 700 34px var(--font-mono);
+  color: var(--color-text-faint);
+}
+
+.input {
+  width: 170px;
+  background: none;
+  border: none;
+  outline: none;
+  text-align: center;
+  font: 700 42px var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-faint);
+}

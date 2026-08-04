@@ -8,9 +8,9 @@ go one milestone at a time rather than racing to the end.
 - [x] 2. Design tokens + static shell
 - [x] 3. Supabase client + env setup (+ verify RLS on `logs`)
 - [x] 4. Auth screen (Supabase Auth)
-- [ ] 5. Category data fetching + shared `CategoryIcon`
-- [ ] 6. Quick Log static layout
-- [ ] 7. Quick Log validation (sanitize, shake, helper text, success overlay)
+- [x] 5. Category data fetching + shared `CategoryIcon`
+- [x] 6. Quick Log static layout
+- [x] 7. Quick Log validation (sanitize, shake, helper text, success overlay)
 - [ ] 8. Calendar sheet + date logic
 - [ ] 9. Swipe-up gesture (independent from tap handler)
 - [ ] 10. Real Supabase insert (explicit `category_id`/`user_id`)

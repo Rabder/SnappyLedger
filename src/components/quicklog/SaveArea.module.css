@@ -1,0 +1,57 @@
+.area {
+  flex: none;
+  padding: 8px 20px 10px;
+}
+
+.grip {
+  width: 60px;
+  height: 20px;
+  margin: 0 auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.gripHandle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.saveButton {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
+  color: white;
+  font: 700 17px var(--font-sans);
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  opacity: 0.92;
+}
+
+.saveButton:active {
+  transform: scale(0.98);
+}
+
+.saveButtonDimmed {
+  background: rgba(131, 147, 255, 0.4);
+}
+
+.helper {
+  text-align: center;
+  font: 500 11px var(--font-sans);
+  color: var(--color-text-muted);
+  margin-top: 7px;
+}
+
+.helperError {
+  color: var(--color-error);
+}

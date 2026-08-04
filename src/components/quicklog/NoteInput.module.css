@@ -1,0 +1,15 @@
+.input {
+  margin-top: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--color-tile-default);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font: 500 13px var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}

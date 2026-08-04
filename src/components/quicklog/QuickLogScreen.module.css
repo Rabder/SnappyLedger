@@ -1,0 +1,57 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.content {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 24px 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.title {
+  font: 700 22px var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--color-tile-default);
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.closeLineA,
+.closeLineB {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  background: var(--color-text-secondary);
+}
+
+.closeLineA {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.closeLineB {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.spacer {
+  flex: 1;
+}
