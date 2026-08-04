@@ -6,6 +6,7 @@ import { AmountCard } from './AmountCard'
 import { CategoryGrid } from './CategoryGrid'
 import { NoteInput } from './NoteInput'
 import { SaveArea } from './SaveArea'
+import { CalendarSheet } from './CalendarSheet'
 import { SuccessOverlay } from './SuccessOverlay'
 import { BottomTabBar } from '../layout/BottomTabBar'
 import styles from './QuickLogScreen.module.css'
@@ -16,6 +17,7 @@ export function QuickLogScreen() {
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [note, setNote] = useState('')
   const [date, setDate] = useState(() => new Date())
+  const [calendarOpen, setCalendarOpen] = useState(false)
   const [shakeAmount, setShakeAmount] = useState(false)
   const [shakeCategory, setShakeCategory] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -51,6 +53,7 @@ export function QuickLogScreen() {
     setNote('')
     setDate(new Date())
     setSaved(false)
+    setCalendarOpen(false)
   }
 
   function attemptSave() {
@@ -78,7 +81,7 @@ export function QuickLogScreen() {
           </button>
         </div>
 
-        <DatePill date={date} />
+        <DatePill date={date} onClick={() => setCalendarOpen(true)} />
         <AmountCard
           value={amount}
           onChange={(raw) => setAmount(amountSanitize(raw))}
@@ -102,6 +105,13 @@ export function QuickLogScreen() {
         onSave={attemptSave}
       />
       <BottomTabBar active="log" />
+
+      <CalendarSheet
+        open={calendarOpen}
+        selectedDate={date}
+        onSelectDate={setDate}
+        onClose={() => setCalendarOpen(false)}
+      />
 
       {saved && (
         <SuccessOverlay

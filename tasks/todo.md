@@ -11,8 +11,8 @@ go one milestone at a time rather than racing to the end.
 - [x] 5. Category data fetching + shared `CategoryIcon`
 - [x] 6. Quick Log static layout
 - [x] 7. Quick Log validation (sanitize, shake, helper text, success overlay)
-- [ ] 8. Calendar sheet + date logic
-- [ ] 9. Swipe-up gesture (independent from tap handler)
+- [x] 8. Calendar sheet + date logic
+- [x] 9. Swipe-up gesture (independent from tap handler)
 - [ ] 10. Real Supabase insert (explicit `category_id`/`user_id`)
 - [ ] 11. History screen (grouping, filters, detail sheet)
 - [ ] 12. Navigation + polish pass

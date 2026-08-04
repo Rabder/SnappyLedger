@@ -1,0 +1,128 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 7;
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  padding: 18px 20px 22px;
+  z-index: 8;
+  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(110%);
+  transition: transform var(--motion-sheet-duration) var(--motion-sheet-easing);
+  pointer-events: none;
+}
+
+.sheetOpen {
+  transform: translateY(0%);
+  pointer-events: auto;
+}
+
+.grabHandle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+  margin: 0 auto 14px;
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navButton {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: var(--color-tile-default);
+  color: var(--color-text-secondary);
+  font: 600 14px var(--font-sans);
+  cursor: pointer;
+}
+
+.navButtonDisabled {
+  color: var(--color-text-faint);
+  cursor: default;
+}
+
+.monthLabel {
+  font: 700 15px var(--font-sans);
+  color: var(--color-text-primary);
+}
+
+.quickSelect {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.quickButton {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-tile-default);
+  font: 600 11.5px var(--font-sans);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 14px;
+}
+
+.weekdayLabel {
+  text-align: center;
+  font: 600 10px var(--font-sans);
+  color: var(--color-text-faint);
+}
+
+.emptyCell {
+  aspect-ratio: 1;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: 600 13px var(--font-sans);
+  cursor: pointer;
+}
+
+.dayCellSelected {
+  background: var(--color-accent);
+  color: white;
+}
+
+.dayCellDisabled {
+  color: var(--color-text-faint);
+  cursor: default;
+}
+
+.doneButton {
+  margin-top: 16px;
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: white;
+  font: 700 14px var(--font-sans);
+  cursor: pointer;
+}
