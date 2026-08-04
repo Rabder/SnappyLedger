@@ -13,8 +13,8 @@ go one milestone at a time rather than racing to the end.
 - [x] 7. Quick Log validation (sanitize, shake, helper text, success overlay)
 - [x] 8. Calendar sheet + date logic
 - [x] 9. Swipe-up gesture (independent from tap handler)
-- [ ] 10. Real Supabase insert (explicit `category_id`/`user_id`)
-- [ ] 11. History screen (grouping, filters, detail sheet)
+- [x] 10. Real Supabase insert (explicit `category_id`/`user_id`)
+- [x] 11. History screen (grouping, filters, detail sheet)
 - [ ] 12. Navigation + polish pass
 - [ ] 13. PWA manifest/installability
 

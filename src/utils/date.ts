@@ -34,3 +34,7 @@ export function dateLabelFor(date: Date): string {
   if (sameDay(date, yesterday)) return 'Yesterday'
   return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate()
 }
+
+export function formatFullDate(date: Date): string {
+  return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate() + ', ' + date.getFullYear()
+}
