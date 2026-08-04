@@ -9,6 +9,7 @@ import { SaveArea } from './SaveArea'
 import { CalendarSheet } from './CalendarSheet'
 import { SuccessOverlay } from './SuccessOverlay'
 import { BottomTabBar } from '../layout/BottomTabBar'
+import { SignOutButton } from '../shared/SignOutButton'
 
 import { useAuth } from '../../hooks/useAuth'
 
@@ -104,15 +105,18 @@ export function QuickLogScreen({ onNavigate }: QuickLogScreenProps) {
       <div className={styles.content}>
         <div className={styles.header}>
           <span className={styles.title}>New expense</span>
-          <button
-            type="button"
-            onClick={resetForm}
-            className={styles.closeButton}
-            aria-label="Close"
-          >
-            <span className={styles.closeLineA} />
-            <span className={styles.closeLineB} />
-          </button>
+          <div className={styles.headerActions}>
+            <SignOutButton />
+            <button
+              type="button"
+              onClick={resetForm}
+              className={styles.closeButton}
+              aria-label="Close"
+            >
+              <span className={styles.closeLineA} />
+              <span className={styles.closeLineB} />
+            </button>
+          </div>
         </div>
 
         <DatePill date={date} onClick={() => setCalendarOpen(true)} />

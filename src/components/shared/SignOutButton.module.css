@@ -1,0 +1,51 @@
+.button {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--color-tile-default);
+  border: none;
+  cursor: pointer;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background: var(--color-tile-hover);
+}
+
+.icon {
+  position: relative;
+  width: 16px;
+  height: 14px;
+}
+
+.bracket {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 1.5px;
+  height: 12px;
+  background: var(--color-text-secondary);
+}
+
+.shaft {
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  width: 8px;
+  height: 1.5px;
+  background: var(--color-text-secondary);
+}
+
+.arrowhead {
+  position: absolute;
+  left: 8px;
+  top: 2.5px;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid var(--color-text-secondary);
+  border-right: 1.5px solid var(--color-text-secondary);
+  transform: rotate(45deg);
+}
