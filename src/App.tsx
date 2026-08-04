@@ -1,23 +1,11 @@
-import { useEffect } from 'react'
-import { supabase } from './lib/supabaseClient'
 import { useAuth } from './hooks/useAuth'
+import { useCategories } from './hooks/useCategories'
 import { LoginScreen } from './components/auth/LoginScreen'
+import { CategoryIcon } from './components/shared/CategoryIcon'
 
 function App() {
   const { user, loading, signOut } = useAuth()
-
-  // TEMPORARY (milestone 3 check only): prove the Supabase client + env vars
-  // work by fetching categories and logging them. Removed once
-  // src/hooks/useCategories.ts exists in milestone 5.
-  useEffect(() => {
-    supabase
-      .from('categories')
-      .select('*')
-      .then(({ data, error }) => {
-        if (error) console.error('Supabase fetch error:', error)
-        else console.log('Categories from Supabase:', data)
-      })
-  }, [])
+  const { categories, loading: categoriesLoading, error: categoriesError } = useCategories()
 
   if (loading) {
     return <div style={{ padding: 24 }}>Loading…</div>
@@ -65,28 +53,24 @@ function App() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        {[
-          ['Rent', 'var(--color-category-rent)'],
-          ['Food', 'var(--color-category-food)'],
-          ['Transport', 'var(--color-category-transport)'],
-          ['Subscriptions', 'var(--color-category-subscriptions)'],
-          ['Entertainment', 'var(--color-category-entertainment)'],
-          ['Other', 'var(--color-category-other)'],
-        ].map(([name, color]) => (
-          <span
-            key={name}
-            style={{
-              background: color,
-              color: 'var(--color-text-primary)',
-              borderRadius: 'var(--radius-pill)',
-              padding: '4px 10px',
-              fontSize: 11,
-              fontWeight: 600,
-            }}
+      {categoriesLoading && (
+        <p style={{ fontSize: 13, color: 'var(--color-text-muted)' }}>Loading categories…</p>
+      )}
+      {categoriesError && (
+        <p style={{ fontSize: 13, color: 'var(--color-error)' }}>{categoriesError}</p>
+      )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+        {categories.map((category) => (
+          <div
+            key={category.id}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
           >
-            {name}
-          </span>
+            <CategoryIcon category={category} size={48} />
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-text-secondary)' }}>
+              {category.name}
+            </span>
+          </div>
         ))}
       </div>
 
