@@ -2,12 +2,13 @@ import { useState, type CSSProperties, type FormEvent } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 
 export function LoginScreen() {
-  const { signIn, signUp } = useAuth()
+  const { signIn, signUp, signInWithGoogle } = useAuth()
   const [mode, setMode] = useState<'signin' | 'signup'>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [googleSubmitting, setGoogleSubmitting] = useState(false)
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -21,11 +22,36 @@ export function LoginScreen() {
     if (error) setError(error)
   }
 
+  async function handleGoogleSignIn() {
+    setError(null)
+    setGoogleSubmitting(true)
+    const { error } = await signInWithGoogle()
+    // Only reached if the redirect never happened — on success the browser
+    // has already navigated away to Google by this point.
+    setGoogleSubmitting(false)
+    if (error) setError(error)
+  }
+
   return (
     <div style={{ padding: 'calc(24px + env(safe-area-inset-top)) 20px 24px' }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 24px' }}>
         {mode === 'signin' ? 'Log in' : 'Sign up'}
       </h1>
+
+      <button
+        type="button"
+        onClick={handleGoogleSignIn}
+        disabled={googleSubmitting}
+        style={googleButtonStyle}
+      >
+        {googleSubmitting ? 'Redirecting…' : 'Continue with Google'}
+      </button>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '18px 0' }}>
+        <div style={{ flex: 1, height: 1, background: 'var(--color-border)' }} />
+        <span style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>or</span>
+        <div style={{ flex: 1, height: 1, background: 'var(--color-border)' }} />
+      </div>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <input
@@ -90,5 +116,17 @@ const buttonStyle: CSSProperties = {
   padding: '14px 0',
   fontSize: 16,
   fontWeight: 700,
+  cursor: 'pointer',
+}
+
+const googleButtonStyle: CSSProperties = {
+  width: '100%',
+  background: 'var(--color-tile-default)',
+  color: 'var(--color-text-primary)',
+  border: '1px solid var(--color-border)',
+  borderRadius: 'var(--radius-lg)',
+  padding: '14px 0',
+  fontSize: 15,
+  fontWeight: 600,
   cursor: 'pointer',
 }
