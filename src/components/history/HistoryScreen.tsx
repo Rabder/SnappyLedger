@@ -8,6 +8,7 @@ import { EmptyState } from './EmptyState'
 import { DetailSheet } from './DetailSheet'
 import { BottomTabBar } from '../layout/BottomTabBar'
 import { SignOutButton } from '../shared/SignOutButton'
+import { ThemeToggle } from '../shared/ThemeToggle'
 import type { LogEntry } from '../../types'
 import styles from './HistoryScreen.module.css'
 
@@ -32,7 +33,10 @@ export function HistoryScreen({ onNavigate }: HistoryScreenProps) {
     <div className={styles.screen}>
       <div className={styles.header}>
         <span className={styles.title}>History</span>
-        <SignOutButton />
+        <div className={styles.headerActions}>
+          <ThemeToggle />
+          <SignOutButton />
+        </div>
       </div>
 
       <CategoryFilterChips

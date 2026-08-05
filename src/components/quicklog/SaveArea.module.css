@@ -18,7 +18,7 @@
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--color-handle);
 }
 
 .saveButton {
@@ -42,7 +42,7 @@
 }
 
 .saveButtonDimmed {
-  background: rgba(131, 147, 255, 0.4);
+  background: var(--color-accent-dim);
 }
 
 .helper {

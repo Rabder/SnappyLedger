@@ -1,7 +1,7 @@
 .backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-overlay-strong);
   z-index: 8;
 }
 
@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--color-bg-surface);
+  background: var(--color-surface-raised);
   border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
   padding: 24px 24px calc(30px + env(safe-area-inset-bottom));
   z-index: 9;
@@ -22,7 +22,7 @@
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--color-handle);
   margin: 0 auto 18px;
 }
 

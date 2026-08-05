@@ -10,6 +10,7 @@ import { CalendarSheet } from './CalendarSheet'
 import { SuccessOverlay } from './SuccessOverlay'
 import { BottomTabBar } from '../layout/BottomTabBar'
 import { SignOutButton } from '../shared/SignOutButton'
+import { ThemeToggle } from '../shared/ThemeToggle'
 
 import { useAuth } from '../../hooks/useAuth'
 
@@ -106,6 +107,7 @@ export function QuickLogScreen({ onNavigate }: QuickLogScreenProps) {
         <div className={styles.header}>
           <span className={styles.title}>New expense</span>
           <div className={styles.headerActions}>
+            <ThemeToggle />
             <SignOutButton />
             <button
               type="button"

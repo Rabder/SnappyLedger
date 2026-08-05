@@ -1,38 +1,9 @@
-/* Design tokens — mirrors design_handoff_expense_logger/README.md "Design Tokens" table.
+/* Design tokens — colors mirror v2-design/*.dc.html's THEMES.dark/THEMES.light objects;
+   spacing/radius/motion/typography mirror design_handoff_expense_logger/README.md.
    Keep this file the single source of truth; components should reference these
-   custom properties rather than hardcoding hex values. */
+   custom properties rather than hardcoding hex/oklch values. */
 
 :root {
-  /* Colors — surfaces */
-  --color-bg-page: #010304;
-  --color-bg-surface: #05080c;
-  --color-tile-default: #0f141a;
-  --color-tile-hover: #151b22;
-
-  /* Colors — accent / status */
-  --color-accent: #8393ff;
-  --color-accent-bg: rgba(131, 147, 255, 0.16);
-  --color-accent-border: rgba(131, 147, 255, 0.6);
-  --color-success: #26cb96;
-  --color-error: #f87966;
-
-  /* Colors — text */
-  --color-text-primary: #f3f5f8;
-  --color-text-secondary: #c9ced4;
-  --color-text-muted: #646a70;
-  --color-text-faint: #595e64;
-
-  /* Colors — borders */
-  --color-border: rgba(255, 255, 255, 0.08);
-
-  /* Colors — categories (avatar / icon-chip backgrounds) */
-  --color-category-rent: #d76a5a;
-  --color-category-food: #3aa85b;
-  --color-category-transport: #2783d5;
-  --color-category-subscriptions: #8f68cb;
-  --color-category-entertainment: #e1505a;
-  --color-category-other: #555f69;
-
   /* Typography */
   --font-sans: 'Manrope', sans-serif;
   --font-mono: 'Space Mono', monospace;
@@ -55,4 +26,75 @@
   --motion-sheet-easing: cubic-bezier(0.32, 0.72, 0, 1);
   --motion-fade-duration: 250ms;
   --motion-shake-duration: 400ms;
+
+  /* Colors that don't vary by theme (checkmark green, category brand colors) */
+  --color-success: #26cb96;
+  --color-category-rent: #d76a5a;
+  --color-category-food: #3aa85b;
+  --color-category-transport: #2783d5;
+  --color-category-subscriptions: #8f68cb;
+  --color-category-entertainment: #e1505a;
+  --color-category-other: #555f69;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg-page: #010304;
+  --color-bg-surface: #05080c;
+  --color-tile-default: #0f141a;
+  --color-tile-hover: #151b22;
+  --color-surface-raised: oklch(15% 0.012 250);
+
+  --color-accent: #8393ff;
+  --color-accent-bg: rgba(131, 147, 255, 0.16);
+  --color-accent-border: rgba(131, 147, 255, 0.6);
+  --color-accent-dim: rgba(131, 147, 255, 0.4);
+  --color-error: #f87966;
+
+  --color-text-primary: #f3f5f8;
+  --color-text-secondary: #c9ced4;
+  --color-text-muted: #646a70;
+  --color-text-faint: #595e64;
+  --color-text-disabled: oklch(38% 0.01 250);
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.1);
+  --color-handle: rgba(255, 255, 255, 0.18);
+  --color-overlay: rgba(0, 0, 0, 0.45);
+  --color-overlay-strong: rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* --color-bg-page has no spec source (pure desktop letterboxing chrome,
+     never visible on a real installed PWA) — chosen as a step darker than
+     --color-bg-surface, mirroring dark mode's own page/surface relationship. */
+  --color-bg-page: oklch(96% 0.004 250);
+  --color-bg-surface: oklch(99% 0.002 250);
+  --color-tile-default: oklch(93% 0.008 250);
+  /* --color-tile-hover has no spec source either (the v2 mock uses opacity-only
+     hover, not a background swap) — derived to match dark mode's own
+     tile-hover-to-tile-default relationship. */
+  --color-tile-hover: oklch(89% 0.01 250);
+  --color-surface-raised: oklch(96% 0.005 250);
+
+  --color-accent: oklch(56% 0.19 275);
+  --color-accent-bg: oklch(56% 0.19 275 / 0.12);
+  --color-accent-border: oklch(56% 0.19 275 / 0.5);
+  --color-accent-dim: oklch(56% 0.19 275 / 0.35);
+  --color-error: oklch(56% 0.18 25);
+
+  --color-text-primary: oklch(20% 0.01 250);
+  --color-text-secondary: oklch(38% 0.012 250);
+  --color-text-muted: oklch(46% 0.012 250);
+  --color-text-faint: oklch(55% 0.012 250);
+  --color-text-disabled: oklch(72% 0.01 250);
+
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-subtle: rgba(0, 0, 0, 0.1);
+  --color-handle: rgba(0, 0, 0, 0.15);
+  --color-overlay: rgba(0, 0, 0, 0.25);
+  --color-overlay-strong: rgba(0, 0, 0, 0.3);
 }
