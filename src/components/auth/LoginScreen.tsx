@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type FormEvent } from 'react'
 import { useAuth } from '../../hooks/useAuth'
+import { ThemeToggle } from '../shared/ThemeToggle'
 
 export function LoginScreen() {
   const { signIn, signUp, signInWithGoogle } = useAuth()
@@ -34,9 +35,19 @@ export function LoginScreen() {
 
   return (
     <div style={{ padding: 'calc(24px + env(safe-area-inset-top)) 20px 24px' }}>
-      <h1 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 24px' }}>
-        {mode === 'signin' ? 'Log in' : 'Sign up'}
-      </h1>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: '0 0 24px',
+        }}
+      >
+        <h1 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>
+          {mode === 'signin' ? 'Log in' : 'Sign up'}
+        </h1>
+        <ThemeToggle />
+      </div>
 
       <button
         type="button"
