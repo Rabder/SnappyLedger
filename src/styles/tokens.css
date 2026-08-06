@@ -63,6 +63,8 @@
   --color-handle: rgba(255, 255, 255, 0.18);
   --color-overlay: rgba(0, 0, 0, 0.45);
   --color-overlay-strong: rgba(0, 0, 0, 0.5);
+  --color-surface-card: oklch(17% 0.014 250);
+  --color-accent-bg-strong: oklch(70% 0.16 275 / 0.3);
 }
 
 :root[data-theme='light'] {
@@ -97,4 +99,6 @@
   --color-handle: rgba(0, 0, 0, 0.15);
   --color-overlay: rgba(0, 0, 0, 0.25);
   --color-overlay-strong: rgba(0, 0, 0, 0.3);
+  --color-surface-card: oklch(95% 0.006 250);
+  --color-accent-bg-strong: oklch(56% 0.19 275 / 0.22);
 }
