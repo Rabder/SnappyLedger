@@ -30,8 +30,17 @@
   flex: 1;
   background: var(--color-accent-bg-strong);
   border-radius: 3px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .barMax {
   background: var(--color-accent);
+}
+
+.detail {
+  margin-top: 8px;
+  font: 600 11.5px var(--font-sans);
+  color: var(--color-text-secondary);
 }

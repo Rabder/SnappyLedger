@@ -42,7 +42,11 @@ export function HistoryScreen({ onNavigate }: HistoryScreenProps) {
         </div>
       </div>
 
-      <WeekSummaryCard total={weekSummary.total} dailyTotals={weekSummary.dailyTotals} />
+      <WeekSummaryCard
+        total={weekSummary.total}
+        dailyTotals={weekSummary.dailyTotals}
+        days={weekSummary.days}
+      />
 
       <CategoryFilterChips
         categories={categories}

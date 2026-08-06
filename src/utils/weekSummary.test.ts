@@ -39,6 +39,8 @@ describe('computeWeekSummary', () => {
     expect(summary.dailyTotals).toHaveLength(7)
     expect(summary.dailyTotals[0]).toBe(20) // 6 days ago
     expect(summary.dailyTotals[6]).toBe(5) // today
+    expect(summary.days).toHaveLength(7)
+    expect(summary.days[6].toDateString()).toBe(new Date().toDateString()) // today
   })
 
   it('returns all zeros for no logs', () => {

@@ -4,6 +4,7 @@ import type { LogEntry } from '../types'
 export interface WeekSummary {
   total: number
   dailyTotals: number[] // 7 entries, oldest (6 days ago) → newest (today)
+  days: Date[] // matching 7 dates, same order
 }
 
 export function computeWeekSummary(logs: LogEntry[]): WeekSummary {
@@ -24,6 +25,7 @@ export function computeWeekSummary(logs: LogEntry[]): WeekSummary {
   return {
     total: dailyTotals.reduce((sum, value) => sum + value, 0),
     dailyTotals,
+    days,
   }
 }
 
