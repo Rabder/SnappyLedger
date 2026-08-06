@@ -13,6 +13,8 @@ export const MONTHS = [
   'December',
 ]
 
+export const WEEKDAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+
 export function stripTime(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
@@ -25,6 +27,10 @@ export function sameDay(a: Date, b: Date): boolean {
   )
 }
 
+export function formatShortDate(date: Date): string {
+  return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate()
+}
+
 export function dateLabelFor(date: Date): string {
   const today = stripTime(new Date())
   const yesterday = new Date(today)
@@ -32,9 +38,9 @@ export function dateLabelFor(date: Date): string {
 
   if (sameDay(date, today)) return 'Today'
   if (sameDay(date, yesterday)) return 'Yesterday'
-  return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate()
+  return formatShortDate(date)
 }
 
 export function formatFullDate(date: Date): string {
-  return MONTHS[date.getMonth()].slice(0, 3) + ' ' + date.getDate() + ', ' + date.getFullYear()
+  return formatShortDate(date) + ', ' + date.getFullYear()
 }

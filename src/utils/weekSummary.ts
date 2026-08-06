@@ -36,8 +36,11 @@ export interface WeekBar {
 
 export function buildWeekBars(dailyTotals: number[]): WeekBar[] {
   const max = Math.max(...dailyTotals, 1)
+  // sqrt scale, not linear — a single outlier day (e.g. rent) shouldn't
+  // crush every other bar down to an invisible sliver.
+  const scaledMax = Math.sqrt(max)
   return dailyTotals.map((value) => ({
-    heightPercent: Math.max(6, Math.round((value / max) * 100)),
+    heightPercent: Math.max(8, Math.round((Math.sqrt(value) / scaledMax) * 100)),
     isMax: value === max && value > 0,
   }))
 }

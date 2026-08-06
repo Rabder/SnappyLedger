@@ -57,9 +57,9 @@ describe('buildWeekBars', () => {
     expect(bars[0].isMax).toBe(false)
   })
 
-  it('gives every bar at least a 6% height floor', () => {
+  it('gives every bar at least an 8% height floor', () => {
     const bars = buildWeekBars([0, 0, 0, 0, 0, 0, 100])
-    expect(bars[0].heightPercent).toBeGreaterThanOrEqual(6)
+    expect(bars[0].heightPercent).toBeGreaterThanOrEqual(8)
   })
 
   it('does not mark any bar as max when all days are zero', () => {

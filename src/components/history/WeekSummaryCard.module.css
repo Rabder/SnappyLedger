@@ -6,10 +6,34 @@
   border: 1px solid var(--color-border);
 }
 
-.label {
+.headerRow {
+  position: relative;
+  height: 16px;
+}
+
+.headerLabel {
+  position: absolute;
+  left: 0;
+  top: 0;
   font: 600 11px var(--font-sans);
   color: var(--color-text-muted);
   letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.headerReadout {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font: 700 14px var(--font-mono);
+  color: var(--color-text-primary);
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  white-space: nowrap;
+}
+
+.headerReadoutVisible {
+  opacity: 1;
 }
 
 .total {
@@ -33,14 +57,26 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  transition: background 0.12s ease;
 }
 
 .barMax {
   background: var(--color-accent);
 }
 
-.detail {
-  margin-top: 8px;
-  font: 600 11.5px var(--font-sans);
-  color: var(--color-text-secondary);
+.dayInitials {
+  display: flex;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.dayInitial {
+  flex: 1;
+  text-align: center;
+  font: 600 9px var(--font-sans);
+  color: var(--color-text-faint);
+}
+
+.dayInitialActive {
+  color: var(--color-text-primary);
 }

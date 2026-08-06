@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 client_secret*
+
+design_handoff*
