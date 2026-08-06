@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCategories } from '../../hooks/useCategories'
+import { useLogs } from '../../hooks/useLogs'
 import { amountSanitize } from '../../utils/amountSanitize'
+import { computeWeekSummary } from '../../utils/weekSummary'
 import { DatePill } from './DatePill'
 import { AmountCard } from './AmountCard'
 import { CategoryGrid } from './CategoryGrid'
@@ -8,6 +10,7 @@ import { NoteInput } from './NoteInput'
 import { SaveArea } from './SaveArea'
 import { CalendarSheet } from './CalendarSheet'
 import { SuccessOverlay } from './SuccessOverlay'
+import { WeekSummaryPill } from './WeekSummaryPill'
 import { BottomTabBar } from '../layout/BottomTabBar'
 import { SignOutButton } from '../shared/SignOutButton'
 import { ThemeToggle } from '../shared/ThemeToggle'
@@ -23,7 +26,9 @@ interface QuickLogScreenProps {
 
 export function QuickLogScreen({ onNavigate }: QuickLogScreenProps) {
   const { categories } = useCategories()
+  const { logs } = useLogs()
   const { user } = useAuth()
+  const weekSummary = computeWeekSummary(logs)
   const [amount, setAmount] = useState('')
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [note, setNote] = useState('')
@@ -107,6 +112,7 @@ export function QuickLogScreen({ onNavigate }: QuickLogScreenProps) {
         <div className={styles.header}>
           <span className={styles.title}>New expense</span>
           <div className={styles.headerActions}>
+            <WeekSummaryPill total={weekSummary.total} />
             <ThemeToggle />
             <SignOutButton />
             <button

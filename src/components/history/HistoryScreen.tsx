@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useCategories } from '../../hooks/useCategories'
 import { useLogs } from '../../hooks/useLogs'
 import { groupLogsByDay } from '../../utils/groupLogsByDay'
+import { computeWeekSummary } from '../../utils/weekSummary'
 import { CategoryFilterChips } from './CategoryFilterChips'
 import { DayGroup } from './DayGroup'
 import { EmptyState } from './EmptyState'
 import { DetailSheet } from './DetailSheet'
+import { WeekSummaryCard } from './WeekSummaryCard'
 import { BottomTabBar } from '../layout/BottomTabBar'
 import { SignOutButton } from '../shared/SignOutButton'
 import { ThemeToggle } from '../shared/ThemeToggle'
@@ -25,6 +27,7 @@ export function HistoryScreen({ onNavigate }: HistoryScreenProps) {
   const filteredLogs =
     categoryFilter === 'all' ? logs : logs.filter((log) => log.category_id === categoryFilter)
   const groups = groupLogsByDay(filteredLogs)
+  const weekSummary = computeWeekSummary(logs)
   const detailCategory = detailLog
     ? categories.find((category) => category.id === detailLog.category_id)
     : undefined
@@ -38,6 +41,12 @@ export function HistoryScreen({ onNavigate }: HistoryScreenProps) {
           <SignOutButton />
         </div>
       </div>
+
+      <WeekSummaryCard
+        total={weekSummary.total}
+        dailyTotals={weekSummary.dailyTotals}
+        days={weekSummary.days}
+      />
 
       <CategoryFilterChips
         categories={categories}

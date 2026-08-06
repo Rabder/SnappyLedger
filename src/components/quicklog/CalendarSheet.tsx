@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MONTHS, sameDay, stripTime } from '../../utils/date'
+import { MONTHS, WEEKDAY_LABELS, sameDay, stripTime } from '../../utils/date'
 import styles from './CalendarSheet.module.css'
 
 interface CalendarSheetProps {
@@ -8,8 +8,6 @@ interface CalendarSheetProps {
   onSelectDate: (date: Date) => void
   onClose: () => void
 }
-
-const WEEKDAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 interface CalendarCell {
   day: number
